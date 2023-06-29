@@ -13,12 +13,14 @@
 #define button7 digitalRead(btn7)
 #define button8 digitalRead(btn8)
 
-String view[9] = {"STARTING", "KUBUS", "BALOK", "PRISMA SEGITIGA", "TABUNG", "BOLA", "KERUCUT", "LIMAS SEGITIGA", "LIMAS SEGIEMPAT"};
+String view[9] = {"MiBox STARTING", "KUBUS", "BALOK", "PRISMA SEGITIGA", "TABUNG", "BOLA", "KERUCUT", "LIMAS SEGITIGA", "LIMAS SEGIEMPAT"};
 int setDelay = 3000;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  play(0);
+  
   pinMode(btn1, INPUT_PULLUP);
   pinMode(btn2, INPUT_PULLUP);
   pinMode(btn3, INPUT_PULLUP);
@@ -28,11 +30,17 @@ void setup() {
   pinMode(btn7, INPUT_PULLUP);
   pinMode(btn8, INPUT_PULLUP);
 
-  delay(200);
+  delay(2000);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  
+  //-->Debug
+  //Serial.print("DEBUG:");
+  //Serial.print(!button1);Serial.print(!button2);Serial.print(!button3);Serial.print(!button4);
+  //Serial.print(!button5);Serial.print(!button6);Serial.print(!button7);Serial.println(!button8);
+
   if (!button1) {
     play(1);
     delay(setDelay);
@@ -67,6 +75,13 @@ void loop() {
   }
 }
 void play(int number) {
+  
   Serial.print("BUTTON PRESS:"); Serial.println(number);
   Serial.print("PLAYING     :"); Serial.println(view[number]);
+  if(number==0){
+    //Play Starting
+    }
+  else{
+    //Play Music
+    }
 }
