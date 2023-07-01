@@ -2,8 +2,11 @@
   Firmansyah Wahyu @2023
   CODE: https://github.com/bywahjoe/mibox
 */
-
+#include <SoftwareSerial.h>
+#include "RedMP3.h"
 #include "pinku.h"
+MP3 mp3(myRX, myTX);
+
 #define button1 digitalRead(btn1)
 #define button2 digitalRead(btn2)
 #define button3 digitalRead(btn3)
@@ -13,12 +16,28 @@
 #define button7 digitalRead(btn7)
 #define button8 digitalRead(btn8)
 
-String view[9] = {"MiBox STARTING", "KUBUS", "BALOK", "PRISMA SEGITIGA", "TABUNG", "BOLA", "KERUCUT", "LIMAS SEGITIGA", "LIMAS SEGIEMPAT"};
+String view[9] = {
+  "MiBox STARTING", //9
+  "KUBUS",          //1
+  "BALOK",          //2
+  "PRISMA SEGITIGA",//3 
+  "LIMAS SEGITIGA", //4
+  "LIMAS SEGIEMPAT",//5
+  "TABUNG",         //6
+  "KERUCUT",        //7
+  "BOLA"            //8
+  };
+
+//Setting
 int setDelay = 3000;
+int volume = 30; //0-30
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  
+  mp3.setVolume(volume);
+  delay(500);
   play(0);
   
   pinMode(btn1, INPUT_PULLUP);
@@ -31,6 +50,7 @@ void setup() {
   pinMode(btn8, INPUT_PULLUP);
 
   delay(2000);
+//  while(1);
 }
 
 void loop() {
@@ -75,13 +95,16 @@ void loop() {
   }
 }
 void play(int number) {
+  mp3.stopPlay();
   
   Serial.print("BUTTON PRESS:"); Serial.println(number);
   Serial.print("PLAYING     :"); Serial.println(view[number]);
   if(number==0){
     //Play Starting
+    mp3.playWithIndex(9);
     }
   else{
     //Play Music
+    mp3.playWithIndex(number);
     }
 }
